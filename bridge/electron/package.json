@@ -1,0 +1,12 @@
+{
+  "name": "siri-plus-plus-client",
+  "version": "0.1.0",
+  "description": "Electron UI for local/cloud hybrid assistant",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^31.0.0"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "profile": {
+    "name": "Alex",
+    "coffee_order": "flat white, oat milk, no sugar",
+    "home_city": "San Francisco"
+  },
+  "people": [
+    {
+      "name": "Sister",
+      "notes": "Often recommends books in iMessage."
+    },
+    {
+      "name": "Milo",
+      "notes": "Family dog. Vet on Tuesdays."
+    }
+  ],
+  "recent_documents": [
+    "Garage-dimensions.pdf",
+    "Car-comparison-notes.md",
+    "Hackathon-pitch-outline.docx"
+  ],
+  "memory": [
+    "User prefers concise responses.",
+    "User has two kids: Emma and Lucas.",
+    "Favorite coding editor is VS Code."
+  ]
+}

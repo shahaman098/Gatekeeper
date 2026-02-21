@@ -1,0 +1,102 @@
+:root {
+  --ink: #08131a;
+  --glass: rgba(229, 245, 255, 0.5);
+  --line: rgba(12, 46, 73, 0.2);
+  --accent-local: #0a7a52;
+  --accent-cloud: #0d4f9e;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 15% 15%, rgba(113, 200, 255, 0.25), transparent 40%),
+    radial-gradient(circle at 85% 85%, rgba(7, 142, 93, 0.25), transparent 40%),
+    transparent;
+}
+
+.shell {
+  display: grid;
+  place-items: start center;
+  padding-top: 20px;
+}
+
+.bubble {
+  width: min(560px, calc(100vw - 24px));
+  border-radius: 28px;
+  border: 1px solid var(--line);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  background: var(--glass);
+  padding: 14px;
+  color: var(--ink);
+  box-shadow: 0 20px 46px rgba(5, 26, 39, 0.18);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.bubble.listening {
+  transform: scale(1.01);
+  box-shadow: 0 0 0 3px rgba(8, 191, 127, 0.25), 0 22px 46px rgba(5, 26, 39, 0.22);
+}
+
+.bubble.thinking-local {
+  box-shadow: 0 0 0 3px rgba(10, 122, 82, 0.25), 0 22px 46px rgba(5, 26, 39, 0.22);
+}
+
+.bubble.thinking-cloud {
+  box-shadow: 0 0 0 3px rgba(13, 79, 158, 0.3), 0 22px 46px rgba(5, 26, 39, 0.22);
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+#tier.local {
+  color: var(--accent-local);
+}
+
+#tier.cloud {
+  color: var(--accent-cloud);
+}
+
+#response {
+  margin: 10px 0;
+  min-height: 36px;
+}
+
+form {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 8px;
+}
+
+input,
+button {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 10px 14px;
+  font-size: 14px;
+}
+
+input {
+  background: rgba(255, 255, 255, 0.65);
+}
+
+button {
+  background: rgba(255, 255, 255, 0.78);
+  cursor: pointer;
+}
+
+button:active {
+  transform: translateY(1px);
+}

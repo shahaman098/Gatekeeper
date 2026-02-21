@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Siri++ Bridge</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="bubble" id="bubble">
+        <div class="status-row">
+          <span id="state">idle</span>
+          <span id="tier">local</span>
+        </div>
+        <p id="response">Ready.</p>
+        <form id="command-form" autocomplete="off">
+          <input id="command-input" type="text" placeholder="Turn my volume down to 20" />
+          <button type="submit">Send</button>
+          <button type="button" id="mic-btn">Mic</button>
+        </form>
+      </section>
+    </main>
+    <script src="renderer.js"></script>
+  </body>
+</html>
