@@ -8,16 +8,39 @@
   </head>
   <body>
     <main class="shell">
-      <section class="bubble" id="bubble">
-        <div class="status-row">
-          <span id="state">idle</span>
-          <span id="tier">local</span>
+      <section class="pill" id="pill" data-ui-state="IDLE">
+        <div class="top-row">
+          <span id="ui-state" class="chip state-chip">IDLE</span>
+          <span id="tier-chip" class="chip tier-chip local">LOCAL</span>
+          <span id="mic-chip" class="chip mic-chip off">MIC OFF</span>
+          <span id="socket-chip" class="chip socket-chip disconnected">SOCKET OFF</span>
         </div>
-        <p id="response">Ready.</p>
-        <form id="command-form" autocomplete="off">
+
+        <div class="indicator-box">
+          <div id="idle-pulse" class="idle-pulse"></div>
+          <div id="listening-bars" class="listening-bars" aria-hidden="true">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <div id="loading-dots" class="loading-dots" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div id="doing-spinner" class="doing-spinner" aria-hidden="true"></div>
+        </div>
+
+        <p id="status-line" class="status-line">Continuously listening for wake word...</p>
+        <p id="transcript-line" class="transcript-line">Wake phrase: "Hey Moonwalk"</p>
+
+        <div class="response-card">
+          <p id="response-text">Waiting for command.</p>
+          <a id="source-link" href="#" target="_blank" rel="noreferrer noopener" hidden></a>
+          <ul id="actions-list"></ul>
+        </div>
+
+        <form id="command-form" class="controls" autocomplete="off">
           <input id="command-input" type="text" placeholder="Turn my volume down to 20" />
           <button type="submit">Send</button>
-          <button type="button" id="mic-btn">Mic</button>
+          <button type="button" id="mic-btn">Start Mic</button>
+          <button type="button" id="cloud-btn">Cloud Test</button>
         </form>
       </section>
     </main>

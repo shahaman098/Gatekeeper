@@ -27,7 +27,7 @@ TELEMETRY_LOG_PATH = Path(__file__).resolve().with_name("events.jsonl")
 
 DEFAULT_FUNCTIONGEMMA_PATH = "cactus/weights/functiongemma-270m-it"
 FUNCTIONGEMMA_PATH = os.getenv("FUNCTIONGEMMA_PATH", DEFAULT_FUNCTIONGEMMA_PATH)
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-flash-lite-latest")
 CONFIDENCE_THRESHOLD = float(os.getenv("LOCAL_CONFIDENCE_THRESHOLD", "0.74"))
 ASSISTANT_DRY_RUN = os.getenv("ASSISTANT_DRY_RUN", "1") not in {"0", "false", "False"}
 AUDIO_IDLE_SECONDS = float(os.getenv("AUDIO_IDLE_SECONDS", "1.0"))
@@ -804,7 +804,17 @@ def run_cloud_reasoning(command: str, context_snippets: list[str], reason: str) 
         + "\n".join(f"- {item}" for item in context_snippets)
     )
 
-    response = client.models.generate_content(model=GEMINI_MODEL, contents=prompt)
+    try:
+        response = client.models.generate_content(model=GEMINI_MODEL, contents=prompt)
+    except Exception as exc:
+        error_text = str(exc)
+        if "RESOURCE_EXHAUSTED" in error_text or "429" in error_text:
+            return (
+                "Cloud escalation reached Gemini, but this API key has no remaining quota. "
+                "Enable billing or wait for quota reset, then retry."
+            )
+        return f"Cloud reasoning failed: {error_text}"
+
     text = getattr(response, "text", None)
     if text:
         return text.strip()
@@ -927,7 +937,10 @@ async def process_command(websocket: WebSocket, command: str, source: str) -> No
         local_decision.reason,
     )
     cloud_url = extract_first_url(cloud_text)
-    cloud_actions = [*actions_taken, "Generated cloud reasoning response"]
+    if cloud_text.startswith("Cloud reasoning failed:") or "no remaining quota" in cloud_text:
+        cloud_actions = [*actions_taken, "Attempted cloud reasoning", "Cloud request failed"]
+    else:
+        cloud_actions = [*actions_taken, "Generated cloud reasoning response"]
     cloud_payload = build_response_payload(
         text=cloud_text,
         source_url=cloud_url,
@@ -1018,6 +1031,16 @@ async def websocket_bridge(websocket: WebSocket) -> None:
 
     except WebSocketDisconnect:
         return
+
+
+@app.get("/")
+def root() -> dict[str, Any]:
+    return {
+        "status": "ok",
+        "service": "gatekeeper-backend",
+        "health": "/health",
+        "websocket": "/ws",
+    }
 
 
 @app.get("/health")

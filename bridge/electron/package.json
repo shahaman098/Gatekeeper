@@ -4,7 +4,7 @@
   "description": "Electron UI for local/cloud hybrid assistant",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "env -u ELECTRON_RUN_AS_NODE electron ."
   },
   "devDependencies": {
     "electron": "^31.0.0"

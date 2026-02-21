@@ -70,7 +70,7 @@ Optional env vars:
 
 ```bash
 export GEMINI_API_KEY="your-key"
-export GEMINI_MODEL="gemini-2.0-flash"
+export GEMINI_MODEL="gemini-flash-lite-latest"
 export FUNCTIONGEMMA_PATH="cactus/weights/functiongemma-270m-it"
 export WHISPER_PATH="cactus/weights/whisper-small"
 export LOCAL_CONFIDENCE_THRESHOLD="0.74"
